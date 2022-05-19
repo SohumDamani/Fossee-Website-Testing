@@ -7,6 +7,7 @@
 {% block content %}
 {% load wagtailcore_tags %}
 
+
 <!--Navbar-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Logo</a>
@@ -17,11 +18,13 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             {% for block in page.navbar %}
-            {% if block.value.visible %}
+            {% for nav in block.value %}
+            {% if nav.value.visible %}
             <li class="nav-item">
-                {{block.value.link}}
+                {{nav.value.link}}
             </li>
             {% endif %}
+            {% endfor %}
             {% endfor %}
         </ul>
         <form class="form-inline">
@@ -33,17 +36,20 @@
 
 <!--Sidebar-->
 <div>
-    {% for block in page.sidebar %}
+    {% for blocks in page.sidebar %}
+    
     <div class="card" style="width: 18rem;">
         <div class="card-header text-center">
-            {{block.value.title}}
+            {{blocks.value.title}}
         </div>
+        {% for nav in blocks.value.links %}
         <ul class="list-group list-group-flush">
-            {% if block.value.visible %}
-            <li class="list-group-item text-center">{{block.value.link}}</li>
+            {% if nav.value.visible %}
+            <li class="list-group-item text-center">{{nav.value.link}}</li>
             {% endif %}
         </ul>
         {% endfor %}
+    {% endfor %}
     </div>
 </div>
 

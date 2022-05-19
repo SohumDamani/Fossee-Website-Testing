@@ -9,23 +9,29 @@ from wagtail.admin.edit_handlers import FieldPanel,MultiFieldPanel
 class HomePage(Page):
     navbar = StreamField(
         [
-            ('navs',blocks.LinkBlock())
+            ('navs',blocks.StreamBlock(
+                [
+                    ('links',blocks.LinkBlock())
+                ]
+            ))
         ],
         null=True,
-        blank=False
+        blank=True,
+        max_num=1
     )
     sidebar = StreamField(
         [
-            ('content',blocks.SidebarBlock())
+            ('sidebar',blocks.SidebarBlock())
         ],
         null=True,
-        blank=False
+        blank=True
     )
+
     content_panels = Page.content_panels+[
         MultiFieldPanel(
             [
                 FieldPanel('navbar'),
-                FieldPanel('sidebar'),
+                FieldPanel('sidebar')
             ],heading="Basic Features",
             classname='collapsible'
         )
