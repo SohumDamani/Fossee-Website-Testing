@@ -3,19 +3,48 @@
 
 {% block body_class %}template-homepage{% endblock %}
 
-{% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
-{% endblock extra_css %}
 
 {% block content %}
+{% load wagtailcore_tags %}
 
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-{% include 'home/welcome_page.html' %}
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            {% for block in page.navbar %}
+            {% if block.value.visible %}
+            <li class="nav-item">
+                {{block.value.link}}
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<!--Sidebar-->
+<div>
+    {% for block in page.sidebar %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-header text-center">
+            {{block.value.title}}
+        </div>
+        <ul class="list-group list-group-flush">
+            {% if block.value.visible %}
+            <li class="list-group-item text-center">{{block.value.link}}</li>
+            {% endif %}
+        </ul>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock content %}
