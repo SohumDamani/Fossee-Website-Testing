@@ -12,7 +12,7 @@ class HomePage(Page):
             ('navs',blocks.StreamBlock(
                 [
                     ('links',blocks.LinkBlock())
-                ]
+                ],icon='link'
             ))
         ],
         null=True,
@@ -26,12 +26,22 @@ class HomePage(Page):
         null=True,
         blank=True
     )
+    footer = StreamField(
+        [
+            ('contents', blocks.FooterBlock()),
+            ('extlinks',blocks.SidebarBlock(label='External Links',icon='link'))
+        ],
+        null=True,
+        blank=True,
+        max_num=4
+    )
 
     content_panels = Page.content_panels+[
         MultiFieldPanel(
             [
                 FieldPanel('navbar'),
-                FieldPanel('sidebar')
+                FieldPanel('sidebar'),
+                FieldPanel('footer')
             ],heading="Basic Features",
             classname='collapsible'
         )

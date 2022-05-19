@@ -35,4 +35,14 @@ class SidebarBlock(blocks.StructBlock):
         icon = 'edit'
         label = 'Content'
 
+class FooterBlock(blocks.StructBlock):
+    title = CharBlock()
+    content = blocks.RichTextBlock(label='Message')
+
+    class Meta:
+        template = "streams/self_block.html"
+        icon='edit'
+        label = 'Content'
+
+
 

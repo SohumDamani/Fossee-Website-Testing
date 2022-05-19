@@ -35,7 +35,7 @@
 </nav>
 
 <!--Sidebar-->
-<div>
+<div class="container my-5">
     {% for blocks in page.sidebar %}
     
     <div class="card" style="width: 18rem;">
@@ -52,5 +52,58 @@
     {% endfor %}
     </div>
 </div>
+
+{% block maincontent %}{% endblock %}
+
+<!-- Footer -->
+<footer
+      class="text-center text-lg-start text-white bd-footer py-4 py-md-5 mt-5"
+      style="background-color: #45526e"
+      >
+<!-- Grid container -->
+<div class="container p-4 pb-0">
+  <!-- Section: Links -->
+  <section class="">
+    <!--Grid row-->
+    <div class="row">
+      <!-- Grid column -->
+        {% for block in page.footer %}
+        {% if block.block_type == 'contents' %}
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+                {{block.value.title}}
+            </h6>
+            <p>
+                {{block.value.content}}
+            </p>
+        </div>
+        {% endif %}
+
+      <!-- Grid column -->
+      <hr class="w-100 clearfix d-md-none" />
+      <!-- Grid column -->
+        {% if block.block_type == 'extlinks' %}
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+                {{block.value.title}}
+            </h6>
+            {% for nav in block.value.links %}
+            {% if nav.value.visible %}
+            <p>
+                {{nav.value.link}}
+            </p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <!--Grid row-->
+  </section>
+  <!-- Section: Copyright -->
+</div>
+<!-- Grid container -->
+</footer>
+<!-- Footer -->
 
 {% endblock content %}
