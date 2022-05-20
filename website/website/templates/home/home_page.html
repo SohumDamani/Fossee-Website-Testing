@@ -9,7 +9,8 @@
 
 
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% if page == homepage or page.navbar_visible %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +18,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
-            {% for block in page.navbar %}
+            {% for block in homepage.navbar %}
             {% for nav in block.value %}
             {% if nav.value.visible %}
             <li class="nav-item">
@@ -33,77 +34,85 @@
         </form>
     </div>
 </nav>
+{% endif %}
 
 <!--Sidebar-->
-<div class="container my-5">
-    {% for blocks in page.sidebar %}
-    
-    <div class="card bg-info" style="width: 18rem;">
-        <div class="card-header text-center">
-            {{blocks.value.title}}
-        </div>
-        {% for nav in blocks.value.links %}
-        <ul class="list-group list-group-flush">
-            {% if nav.value.visible %}
-            <li class="list-group-item text-center">{{nav.value.link}}</li>
-            {% endif %}
-        </ul>
-        {% endfor %}
-    {% endfor %}
-    </div>
-</div>
 
-{% block maincontent %}{% endblock %}
-
-<!-- Footer -->
-<footer
-      class="text-center text-lg-start text-white bd-footer py-4 py-md-5 mt-5"
-      style="background-color: #45526e"
-      >
-<!-- Grid container -->
-<div class="container p-4 pb-0">
-  <!-- Section: Links -->
-  <section class="">
-    <!--Grid row-->
-    <div class="row">
-      <!-- Grid column -->
-        {% for block in page.footer %}
-        {% if block.block_type == 'contents' %}
-        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">
-                {{block.value.title}}
-            </h6>
-            <p>
-                {{block.value.content}}
-            </p>
-        </div>
-        {% endif %}
-
-      <!-- Grid column -->
-      <hr class="w-100 clearfix d-md-none" />
-      <!-- Grid column -->
-        {% if block.block_type == 'extlinks' %}
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">
-                {{block.value.title}}
-            </h6>
-            {% for nav in block.value.links %}
-            {% if nav.value.visible %}
-            <p>
-                {{nav.value.link}}
-            </p>
-            {% endif %}
+<div class="row">
+    {% if page == homepage or page.sidebar_visible %}
+    <div class="container my-5 col">
+        {% for blocks in homepage.sidebar %}
+        <div class="card bg-dark text-light" style="width: 18rem;">
+            <div class="card-header text-center">
+                {{blocks.value.title}}
+            </div>
+            {% for nav in blocks.value.links %}
+            <ul class="list-group list-group-flush">
+                {% if nav.value.visible %}
+                <li class="list-group-item text-center text-dark">{{nav.value.link}}</li>
+                {% endif %}
+            </ul>
             {% endfor %}
         </div>
-        {% endif %}
-        {% endfor %}
+            {% endfor %}
     </div>
-    <!--Grid row-->
-  </section>
-  <!-- Section: Copyright -->
+
+    {% endif %}
+    {% block maincontent %}{% endblock %}
 </div>
-<!-- Grid container -->
-</footer>
+
 <!-- Footer -->
+{% if page == homepage or page.footer_visible %}
+<div class="footer">
+    <footer
+            class="text-center text-lg-start text-white bd-footer py-4 py-md-5 mt-5"
+            style="background-color: #45526e"
+    >
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+            <!-- Section: Links -->
+            <section class="">
+                <!--Grid row-->
+                <div class="row">
+                    <!-- Grid column -->
+                    {% for block in homepage.footer %}
+                    {% if block.block_type == 'contents' %}
+                    <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">
+                            {{block.value.title}}
+                        </h6>
+                        <p>
+                            {{block.value.content}}
+                        </p>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Grid column -->
+                    <hr class="w-100 clearfix d-md-none"/>
+                    <!-- Grid column -->
+                    {% if block.block_type == 'extlinks' %}
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                        <h6 class="text-uppercase mb-4 font-weight-bold">
+                            {{block.value.title}}
+                        </h6>
+                        {% for nav in block.value.links %}
+                        {% if nav.value.visible %}
+                        <p>
+                            {{nav.value.link}}
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <!--Grid row-->
+            </section>
+            <!-- Section: Copyright -->
+        </div>
+        <!-- Grid container -->
+    </footer>
+</div>
+{% endif %}
 
 {% endblock content %}

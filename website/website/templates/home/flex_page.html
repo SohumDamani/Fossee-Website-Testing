@@ -1,0 +1,22 @@
+{% extends 'home/home_page.html' %}
+{% load wagtailcore_tags %}
+{% block maincontent %}
+
+
+
+
+<div class="container my-5 col-8">
+    <div class="accordion" id="accordionExample">
+        {% for block in page.content %}
+        <div class="card text-bg-success mb-3" style="max-width: 40rem;">
+            <div class="card-header bg-dark text-light ">{{block.value.title}}</div>
+            <div class="card-body bg-secondary">
+                <p class="card-text ">{{block.value.content}}.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
