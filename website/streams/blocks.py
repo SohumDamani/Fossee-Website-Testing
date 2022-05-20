@@ -22,6 +22,14 @@ class StreamBlock(blocks.StreamBlock):
 class CharBlock(blocks.CharBlock):
     pass
 
+class TitleAndContent(blocks.StructBlock):
+    title = blocks.CharBlock(max_length=250,required=True)
+    content = blocks.RichTextBlock(required=True)
+
+    class Meta:
+        icon='edit'
+
+
 class SidebarBlock(blocks.StructBlock):
     title = blocks.CharBlock(max_length=250,required=True)
     links = StreamBlock(
